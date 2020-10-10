@@ -1,0 +1,111 @@
+<section class="section section__student">
+    <div class="columns is-mobile is-centered">
+        <div class="student column is-half">
+            <form action="#" class="form" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+                
+                <div class="form__group">
+                    <input 
+                    type="text" 
+                    class="form__input"
+                    placeholder="Names"
+                    id="names"
+                    formControlName="names"
+                    controlErrorsClass="error-class"
+                    >
+                    <label for="names" class="form__label">Names</label>
+                </div>
+            
+                <div class="form__group">
+                    <input 
+                    type="text" 
+                    class="form__input"
+                    placeholder="Email"
+                    id="email"
+                    formControlName="email"
+                    controlErrorsClass="error-class"
+                    >
+                    <label for="email" class="form__label">Email</label>
+                </div>
+                
+                <div class="form__group">
+                    <input 
+                    type="text" 
+                    class="form__input"
+                    placeholder="Student Id"
+                    id="studentId"
+                    formControlName="studentId"
+                    controlErrorsClass="error-class"
+                    >
+                    <label for="studentId" class="form__label">Student Id</label>
+                </div>
+            
+                <div class="form__group">
+                    <input 
+                    type="text" 
+                    class="form__input"
+                    placeholder="Curriculum"
+                    id="curriculum"
+                    formControlName="curriculum"
+                    controlErrorsClass="error-class"
+                    >
+                    <label for="curriculum" class="form__label">Curricullum</label>
+                </div>
+                
+                <div class="form__group">
+                    <mat-form-field appearance="fill" class="form_date" color="primary">
+                        <mat-label>Date of Birth</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="dob" disabled>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            
+                <div class="button__group">
+                    <button type="submit" class="button is-primary" [disabled]="studentForm.invalid">Submit</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- <div class="popup" id="popup">
+    <div class="popup__content">
+        <div class="popup__left">
+            <img
+                src="img/nat-8.jpg"
+                alt="Tour photo"
+                class="popup__img"
+            />
+            <img
+                src="img/nat-9.jpg"
+                alt="Tour photo"
+                class="popup__img"
+            />
+        </div>
+        
+        <div class="popup__right">
+            <a href="#section-tours" class="popup__close">&times;</a>
+            <h2 class="heading-secondary u-margin-bottom-small">
+                Start booking now
+            </h2>
+            <h3 class="heading-tertiary u-margin-bottom-small">
+                Important &ndash; Please read these terms before booking
+            </h3>
+            <p class="popup__text">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Fuga, sit repudiandae! Ipsum autem voluptatibus corrupti
+                deserunt eaque et quae? Similique, non? Quas nesciunt
+                voluptatum debitis. Sapiente aspernatur illo suscipit
+                quos. Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. Sapiente tenetur quod vitae fugiat molestiae
+                suscipit adipisci sint minus, earum magnam? Earum vero
+                laborum voluptatum quaerat ratione quisquam illum.
+                Temporibus, obcaecati.
+            </p>
+            <a href="#section-tours" class="btn btn--green">Book now</a>
+        </div>
+    </div>
+ </div> -->
+
+

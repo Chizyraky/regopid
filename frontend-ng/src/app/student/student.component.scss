@@ -1,0 +1,142 @@
+@import "../../styles/main.scss";
+
+.student {
+    
+}
+
+.popup {
+    background-color: rgba(black, 0.85);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2500;
+
+    //     display: none; // visibility can't be animated
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+
+    // .popup__content
+    &__content {
+        @include absCenter;
+        width: 80%;
+
+        // height: 70%;
+        background-color: white;
+        box-shadow: 0 2rem 4rem rgba(black, 0.85);
+        border-radius: 3px;
+        display: table;
+        overflow: hidden;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.25);
+        transition: all 0.4s 0.2s;
+
+        @include respond(tab-port) {
+            display: table;
+        }
+    }
+
+    // .popup__left
+    &__left {
+        width: 33.333333333%;
+        display: table-cell;
+
+        @include respond(tab-port) {
+            width: 75%;
+            height: 33.33333333%;
+            // bottom: 0px;
+            display: inline-flex;
+            // position: ;
+        }
+    }
+
+    // .popup__right
+    &__right {
+        width: 66.666666666%;
+        display: table-cell;
+        vertical-align: middle;
+        padding: 3rem 5rem;
+
+        @include respond(tab-port) {
+            height: 100%;
+            top: 0;
+            width: auto;
+            // position: absolute;
+            display: table-row;
+
+            text-align: center;
+            padding: 1rem 4rem;
+        }
+    }
+
+    // .popup__img
+    &__img {
+        display: block;
+        width: 66.666666666%;
+
+        @include respond(tab-port) {
+            // display: inline-flex;
+        }
+    }
+
+    // .popup__text
+    &__text {
+        font-size: 1.4rem;
+        margin-bottom: 4rem;
+
+        -moz-column-count: 2;
+        -moz-column-gap: 4rem; // default: 1em = 14px;
+        -moz-column-rule: 1px solid grey;
+
+        column-count: 2;
+        column-gap: 4rem; // default: 1em = 14px;
+        column-rule: 1px solid grey;
+
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto; // none, manual=default, auto. Must have <html lang="en">
+    }
+
+    &:target {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &:target &__content {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    &__close {
+        &:link,
+        &:visited {
+            color: grey;
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            font-size: 3rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+            line-height: 0;
+        }
+
+        &:hover {
+            color: aquamarine;
+        }
+    }
+}
+
+.button__group {
+    padding-left: 1.3rem;
+}
+
+.error-class {
+        color: $danger;
+        font-size: 0.7rem;
+        margin-left: 1.2rem;
+}
+

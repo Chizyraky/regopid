@@ -1,0 +1,93 @@
+<section class="section section__student">
+
+      <div class="course">
+        <div class="form__group">
+          <mat-form-field appearance="fill">
+              <mat-label>Select Course</mat-label>
+              <mat-select [formControl]="courseIdControl" (selectionChange)="onCourseChange()">
+                  <mat-option value='' (click)="clearRecords()">None</mat-option>
+                  <mat-option *ngFor="let course of courses" [value]="course.id">
+                    {{course.course_name}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+
+        </div>
+        <button type="submit" class="button is-primary" [disabled]="courseIdControl.value === ''" (click)='showPopup(courseIdControl.value)'>Sign in Students</button>
+      </div>
+
+      <div class="form__group">
+        <mat-form-field appearance="fill">
+          <mat-label>Filter by Date</mat-label>
+          <input matInput [matDatepicker]="dp3" (dateChange)="applyFilter($event)" disabled>
+          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+          <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      
+
+      <!-- <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field> -->
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+          <!-- Position Column -->
+        <ng-container matColumnDef="Date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{getDate(element.date)}} </td>
+        </ng-container>
+      
+        <!-- Time Column -->
+        <ng-container matColumnDef="Time">
+          <th mat-header-cell *matHeaderCellDef> Time </th>
+          <td mat-cell *matCellDef="let element"> {{getTime(element.date)}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Curriculum">
+          <th mat-header-cell *matHeaderCellDef> Curriculum </th>
+          <td mat-cell *matCellDef="let element"> {{element.student_curriculum}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Attended">
+          <th mat-header-cell *matHeaderCellDef> Attended </th>
+          <td mat-cell *matCellDef="let element"> {{element.attendance}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+        <!-- Row shown when there is no matching data. -->
+        <!-- <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="5">No data matching the filter "{{element.date}}"</td>
+        </tr> -->
+      </table>
+
+</section>
+
+<div class="popup" *ngIf="!showpop">
+    <div class="popup__content">
+        <!-- <div class="popup__right"> -->
+            <a href="lecturer/attendance#" class="popup__close" (click)="closePopup()" >&times;</a>
+                    <textarea 
+                    type="text" 
+                    class="form__input focus"
+                    id="encryption"
+                    [formControl]="studentEncryption"
+                    #encryption
+                    autofocus
+                    (keydown.enter)="registerAttendance($event)">
+                    </textarea>
+            <!-- <button (click)="showpop = !showpop" class="button">Book now</button> -->
+        <!-- </div> -->
+    </div>
+ </div>

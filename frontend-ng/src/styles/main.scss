@@ -1,0 +1,30 @@
+// Bulma
+// Import only what you need from Bulma
+// @import "../../node_modules/bulma/sass/utilities/_all.sass";
+// @import "../../node_modules/bulma/sass/base/_all.sass";
+// @import "../../node_modules/bulma/sass/components/_all.sass";
+// @import "../../node_modules/bulma/sass/form/_all.sass";
+// @import "../../node_modules/bulma/sass/grid/_all.sass";
+// @import "../../node_modules/bulma/sass/elements/_all.sass";
+// @import "../../node_modules/bulma/sass/layout/_all.sass";
+// @import "../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../node_modules/bulma/bulma.sass";
+// @import "../../node_modules/bulma-calendar/src/sass/index.sass";
+@import "../../node_modules/bulma-extensions/bulma-calendar/src/sass/index.sass";
+
+
+// scss 7-in-1 
+
+@import 'abstracts/variables';
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+
+@import 'base/animations';
+@import 'base/base';
+@import 'base/typography';
+@import 'base/utilities';
+
+@import 'components/form';
+
+@import 'layout/grid';
+

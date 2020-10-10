@@ -1,0 +1,42 @@
+<section class="section section__student">
+    <div class="columns is-mobile is-centered">
+    <div class="student column is-half">
+        <form action="#" class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            
+            <div class="form__group">
+                <input 
+                type="text" 
+                class="form__input"
+                placeholder="Email"
+                id="email"
+                formControlName="email"
+                controlErrorsClass="form__error"
+                >
+                <label for="email" class="form__label">Email</label>
+            </div>
+
+            <div class="form__group">
+                    <input 
+                    [type]="passwordType" 
+                    class="form__input"
+                    placeholder="Password"
+                    id="password"
+                    formControlName="password"
+                    controlErrorsClass="form__error"
+                    >
+                    <label for="password" class="form__label">Password</label>
+                </div>
+
+            <!-- <div class="form__group">
+                <label for="datePicker1" class="">Date of Birth </label>
+                <input class="input" type="date" formControlName="dob" value="09/25/2018" (change)="dateChange($event)">
+            </div> -->
+
+            <div class="button__group">
+                <button type="submit" class="button is-primary">Submit</button>
+            </div>
+            
+        </form>
+    </div>
+    </div>
+</section>

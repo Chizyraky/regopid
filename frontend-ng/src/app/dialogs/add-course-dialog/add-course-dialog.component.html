@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Install Angular</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="columns is-mobile is-centered">
+        <div class="student">
+            <form action="#" class="form" [formGroup]="courseForm" (ngSubmit)="onSubmit()" errorTailor>
+                <div class="form__group form__group--dialog">
+                    <input 
+                    type="text" 
+                    class="form__input"
+                    placeholder="Course Name"
+                    id="name"
+                    formControlName="name"
+                    controlErrorsClass="form__error"
+                    >
+                    <label for="name" class="form__label">Course Name</label>
+                </div>
+
+                <div class="form__group">
+                    <input 
+                    type="text" 
+                    class="form__input"
+                    placeholder="Curriculum"
+                    id="curriculum"
+                    formControlName="curriculum"
+                    controlErrorsClass="form__error"
+                    >
+                    <label for="curriculum" class="form__label">Curriculum</label>
+                </div>
+
+                <div class="form__group">
+                    <input 
+                    type="text" 
+                    class="form__input"
+                    placeholder="Lecturer"
+                    id="lecturer"
+                    formControlName="lecturer"
+                    controlErrorsClass="form__error"
+                    disabled>
+                    <label for="lecturer" class="form__label">Lecturer</label>
+                </div>
+
+                <!-- <div class="form__group">
+                    <label for="datePicker1" class="">Date of Birth </label>
+                    <input class="input" type="date" formControlName="dob" value="09/25/2018" (change)="dateChange($event)">
+                </div> -->
+                
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button type="submit" class="button is-primary" [mat-dialog-close]="true" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

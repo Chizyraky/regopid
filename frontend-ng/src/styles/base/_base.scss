@@ -1,0 +1,48 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+    
+}
+
+html {
+    /**
+    *? browser font-size = 16px;
+    *? user font-size = unknown;
+    *? we want 1rem to be multiple of 10px; 1rem = 10px;
+    *? 10/16 = 0.625 * 100 = 62.5%
+    *? 1rem = 10px
+
+    *? If user overides browser font-size to 20px,
+    *? then 1rem = 0.625 * 20 = 12.5; automaticaly
+  */
+    // font-size: 62.5%;
+
+    // @include respond(tab-land) {
+    //     font-size: 56.25%;
+    //     //? 0.5625 * 16 = 9px
+    // }
+
+    // @include respond(tab-port) {
+    //     font-size: 50%;
+    //     //? 0.5 * 16 = 8px
+    // }
+
+    // @include respond(phone) {
+    //     font-size: 30%;
+    //     //? 0.3 * 16 = 4.8px
+    // }
+
+    // @include respond(big-desktop) {
+    //     font-size: 80%;
+    //     //? 0.8 * 16 = 12.8px
+    // }
+
+    background-color: #fafafa;
+}
+
+body {
+    box-sizing: border-box;
+}

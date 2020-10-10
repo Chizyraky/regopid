@@ -1,0 +1,45 @@
+<!-- <mat-drawer-container class="example-container">
+
+  <mat-drawer mode="side" opened fixedInViewport>
+      Drawer content
+    </mat-drawer>
+
+  <mat-drawer-content>
+      Main content
+
+      
+  </mat-drawer-content>
+</mat-drawer-container> -->
+
+
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" opened class="sidebar"
+                 [fixedInViewport]="true" >
+
+                  <ul>
+                    <li [ngClass]="{'active': currentUrl === '/'}" *ngIf="!loggedIn">
+                      <a routerLink="/" (click)="changeUrl('/')">Login</a>
+                    </li>
+                    <li [ngClass]="{'active': currentUrl === '/student'}" *ngIf="loggedIn">
+                      <a routerLink="/student" (click)="changeUrl('/student')">Register Student</a>
+                    </li>
+                    <li [ngClass]="{'active': currentUrl === '/lecturer/attendance'}" *ngIf="loggedIn">
+                      <a routerLink="/lecturer/attendance">Check Attendance</a>
+                    </li>
+                    <li [ngClass]="{'active': currentUrl === '/lecturer/profile' || currentUrl === '/lecturer/profile#courses'}"
+                    *ngIf="loggedIn">
+                      <a routerLink="/lecturer/profile">User Profile</a>
+                    </li>
+                    <li [ngClass]="{'active': currentUrl === '/'}" *ngIf="loggedIn">
+                      <a routerLink="/" (click)="logout()">Logout</a>
+                    </li>
+                  </ul>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content >
+
+      <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
