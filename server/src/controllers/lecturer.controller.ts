@@ -38,7 +38,7 @@ export class LecturerController {
     }
 
     @Get()
-    @UseGuards(AuthGuard())
+    @UseGuards()
     async getAllLecturers() {
         return await this.lecturerService.showAll();
     }

@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  api_server: 'https://regopid-api.azurewebsites.net/api/api',
+  secret: 'secret',
 };

@@ -83,7 +83,10 @@ export class LecturerService {
         });
         const result = await newLecturer.save();
         Logger.log(result as LecturerRO, 'Created Lecturer')
-        const payload = { email: result.email, sub: result.id };
+        const payload = {
+            email: result.email,
+            sub: result.id
+        };
         return {
             id: result.id,
             email: result.email,

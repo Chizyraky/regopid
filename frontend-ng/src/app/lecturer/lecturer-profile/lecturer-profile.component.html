@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-1-of-2">
             <div class="details">
-                <h2 class="details__topic">Individual Information</h2>
+                <h2 class="details__topic">Lecturer Information</h2>
                 <div>
                     <div class="details__label">Names</div>
                     <div class="details__value">{{user?.names}}</div>
@@ -36,7 +36,7 @@
         </div>
     </div>
     <button class="button">Edit Profile</button>
-    
+
     <div class="details">
         <h2 class="details__topic">Course Information</h2>
         <div class="add-course">
@@ -44,21 +44,19 @@
         </div>
         <div *ngIf="user?.courses" id="couses">
 
-            <table mat-table
-                   [dataSource]="dataSource" multiTemplateDataRows
-                   class="mat-elevation-z8">
-              <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-              </ng-container>
-          
-              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-              <ng-container matColumnDef="expandedDetail">
-                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                  <div class="example-element-detail"
-                       [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                    
-                    <!-- <div class="example-element-description">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                </ng-container>
+
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                        <div class="example-element-detail"
+                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+                            <!-- <div class="example-element-description">
                         <div class="details-exp" *ngFor="let student of element.students">
                             <div class="details-exp__content">
                                 <div class="details-exp__label">Names</div>
@@ -74,42 +72,41 @@
                             </div>
                         </div>
                     </div> -->
-                    <table class="table is-hoverable student-table">
-                        <thead>
-                            <tr>
-                              <th>Student Names</th>
-                              <th>Email</th>
-                              <th>Student Id</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let student of element.students">
-                              <th>{{student.names}}</th>
-                              <th>{{student.email}}</th>
-                              <th>{{student.studentId}}</th>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <button (click)="showPopup(element.id)">Add Student</button>
-                    </div>
+                            <table class="table is-hoverable student-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student Names</th>
+                                        <th>Email</th>
+                                        <th>Student Id</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let student of element.students">
+                                        <th>{{student.names}}</th>
+                                        <th>{{student.email}}</th>
+                                        <th>{{student.studentId}}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <button (click)="showPopup(element.id)">Add Student</button>
+                            </div>
 
-                  </div>
-                </td>
-              </ng-container>
-          
-              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-              <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-                  class="example-element-row"
-                  [class.example-expanded-row]="expandedElement === element"
-                  (click)="expandedElement = expandedElement === element ? null : element">
-              </tr>
-              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
             </table>
 
         </div>
         <div *ngIf="!user?.courses">
-            No Courses 
+            No Courses
         </div>
     </div>
 </section>
@@ -117,17 +114,11 @@
 <div class="popup" *ngIf="!showpop">
     <div class="popup__content">
         <!-- <div class="popup__right"> -->
-            <a href="lecturer/profile#courses" class="popup__close" (click)='closePopup()'>&times;</a>
-                    <textarea 
-                    type="text" 
-                    class="form__input focus"
-                    id="encryption"
-                    [formControl]="studentEncryption"
-                    #encryption
-                    autofocus
-                    (keydown.enter)="registerStudent()">
+        <a href="lecturer/profile#courses" class="popup__close" (click)='closePopup()'>&times;</a>
+        <textarea type="text" class="form__input focus" id="encryption" [formControl]="studentEncryption" #encryption
+            autofocus (keydown.enter)="registerStudent()">
                     </textarea>
-            <button (click)="registerStudent()" class="button">Register Student</button>
+        <button (click)="registerStudent()" class="button">Register Student</button>
         <!-- </div> -->
     </div>
- </div>
+</div>

@@ -21,7 +21,6 @@ import { CourseSchema } from 'src/models/course.model';
             { name: 'Course', schema: CourseSchema },
             { name: 'AttendanceRecord', schema: AttendanceRecordSchema },
         ]),
-        // forwardRef(() => AuthModule),
         PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.register({
             secretOrPrivateKey: 'secret',

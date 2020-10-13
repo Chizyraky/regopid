@@ -34,6 +34,6 @@ import configuration from './config/configuration';
     //   provide: APP_FILTER,
     //   useClass: HttpErrorFilter,
     // },
-    AppService],
+    AppService]
 })
 export class AppModule { }
