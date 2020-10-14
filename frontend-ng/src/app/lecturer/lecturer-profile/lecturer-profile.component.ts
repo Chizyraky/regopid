@@ -66,8 +66,8 @@ export class LecturerProfileComponent implements OnInit {
       .open(AddCourseDialogComponent, {
         // minHeight: 460,
         // minWidth: 505,
-        height: '70%',
-        width: '30%',
+        height: '470px',
+        width: '420px',
         // disableClose: true,
         closeOnNavigation: false,
       });

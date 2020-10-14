@@ -18,6 +18,7 @@ export class ApiService {
   }
 
   createCourse(data: Course): Observable<Course> {
+    console.log(data);
     return this.http.post<Course>(this.api + '/course', data);
   }
 

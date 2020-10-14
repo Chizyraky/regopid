@@ -58,10 +58,10 @@ export class StudentComponent implements OnInit {
   showCoursesDialog() {
     this.dialogRef = this.dialog
       .open(QrDialogComponent, {
-        height: '50%',
+        height: '40%',
         width: '30%',
-        closeOnNavigation: false,
-        disableClose: true,
+        closeOnNavigation: true,
+        disableClose: false,
         data: this.value,
       });
     this.dialogRef.componentInstance.referencesUpdatedSuccessfully.subscribe(result => {

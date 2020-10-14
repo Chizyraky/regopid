@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/auth.service';
 import { Course } from '@app/models/course';
@@ -23,6 +24,7 @@ export class AddCourseDialogComponent implements OnInit {
     private fb: FormBuilder,
     private apiService: ApiService,
     private authService: AuthService,
+    private dialogRef: MatDialogRef<AddCourseDialogComponent>,
     private router: Router,
   ) { }
 
@@ -57,6 +59,7 @@ export class AddCourseDialogComponent implements OnInit {
     this.apiService.createCourse(course).subscribe(
       (res) => {
         console.log(res);
+        this.dialogRef.close();
       },
       (err) => {
         console.log(err);

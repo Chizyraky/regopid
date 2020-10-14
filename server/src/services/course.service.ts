@@ -44,12 +44,13 @@ export class CourseService {
         return result as CourseRO;
     }
 
-    async addLecturer(email: string,) {
-        const user = await this.lecturerModel.findOne({ email }).exec();
+    async addLecturer(data: CourseDTO) {
 
-        if (!user) {
-            throw new HttpException('Lecturer doesn"t exists.', HttpStatus.BAD_REQUEST);
-        }
+        // if (!user) {
+        //     throw new HttpException('Lecturer doesn"t exists.', HttpStatus.BAD_REQUEST);
+        // }
+
+
     }
 
     async registerStudent(data: AttendanceDTO) {
@@ -59,10 +60,10 @@ export class CourseService {
         }
 
         const studentJson = this.simpleCrypto.decrypt(data.encryptedKey);
-        Logger.log(studentJson, 'Student Json: ');
+        //Logger.log(studentJson, 'Student Json: ');
 
         const student: Student = studentJson as Student;
-        Logger.log(student, 'Student Object: ');
+        //Logger.log(student, 'Student Object: ');
 
         if (course.students.some(obj => obj.studentId === student.studentId)) {
             throw new HttpException('Student is already Registered.', HttpStatus.BAD_REQUEST);
@@ -83,16 +84,15 @@ export class CourseService {
         }
 
         const studentJson = this.simpleCrypto.decrypt(data.encryptedKey);
-        Logger.log(studentJson, 'Student Json: ');
+        //Logger.log(studentJson, 'Student Json: ');
 
         const student: Student = studentJson as Student;
-        Logger.log(student, 'Student Object: ');
+        //Logger.log(student, 'Student Object: ');
 
         const studentEntity = await this.studentModel.findOne({ studentId: student.studentId });
-
-
-
     }
+
+
 
     // async getCourses(email: string) {
     //     const course = await this.courseModel.find({ 'lecturers._id':  }).populate('students').exec();

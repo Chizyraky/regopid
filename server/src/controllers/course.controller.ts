@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CourseDTO } from 'src/dto/course.dto';
 import { AttendanceDTO } from 'src/dto/lecturer.dto';
@@ -24,6 +24,12 @@ export class CourseController {
     @UseGuards(AuthGuard())
     async registerStudent(@Body() data: AttendanceDTO) {
         return await this.courseService.registerStudent(data);
+    }
+
+    @Post()
+    @UseGuards(AuthGuard())
+    async addLecturer(@Body() data: CourseDTO) {
+
     }
 
 
