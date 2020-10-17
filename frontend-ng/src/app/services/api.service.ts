@@ -4,6 +4,7 @@ import { Student } from '../models/student';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Attendance, AttendanceDTO, Course } from '@app/models/course';
+import { Lecturer } from '@app/models/lecturer';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +45,13 @@ export class ApiService {
 
   getLecturerCouses() {
     return this.http.get<Course[]>(this.api + '/lecturer/courses');
+  }
+
+  getAllLecturers() {
+    return this.http.get<Lecturer[]>(this.api + '/lecturer');
+  }
+
+  addLecturerToCourse(data: Course) {
+    return this.http.post(this.api, data);
   }
 }

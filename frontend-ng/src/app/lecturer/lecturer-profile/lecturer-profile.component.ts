@@ -8,6 +8,7 @@ import { AttendanceDTO, Course } from '@app/models/course';
 import { Lecturer } from '@app/models/lecturer';
 import { Student } from '@app/models/student';
 import { ApiService } from '@app/services/api.service';
+import { AddLecturerDialogComponent } from '@app/dialogs/add-lecturer-dialog/add-lecturer-dialog.component';
 
 @Component({
   selector: 'app-lecturer-profile',
@@ -25,6 +26,7 @@ export class LecturerProfileComponent implements OnInit {
 
   user: Lecturer;
   dialogRef: MatDialogRef<AddCourseDialogComponent>;
+  addLecturerRef: MatDialogRef<AddLecturerDialogComponent>;
   @ViewChild('encryption') encryptionElement: ElementRef;
   @ViewChild('popup') popupElement: ElementRef;
   studentEncryption: FormControl;
@@ -34,6 +36,8 @@ export class LecturerProfileComponent implements OnInit {
   dataSource: Course[];
   columnsToDisplay = ['course_name', 'curriculum'];
   expandedElement: Course | null;
+
+  lecturersList: Lecturer[];
 
   constructor(
     private authService: AuthService,
@@ -45,7 +49,7 @@ export class LecturerProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser();
-
+    this.getAllLecturers();
   }
 
   getUser() {
@@ -54,6 +58,7 @@ export class LecturerProfileComponent implements OnInit {
         this.user = res;
         console.log(this.user);
         this.dataSource = res.courses;
+        console.log(this.dataSource);
         // this.expandedElement = res.courses.
       }
     );
@@ -105,6 +110,32 @@ export class LecturerProfileComponent implements OnInit {
       }
     );
 
+  }
+
+  getAllLecturers() {
+    this.apiService.getAllLecturers().subscribe(
+      res => {
+        this.lecturersList = res;
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  showAddLecturerDialog(courseData: Course) {
+    this.addLecturerRef = this.dialog
+      .open(AddLecturerDialogComponent, {
+        height: '300px',
+        width: '420px',
+        closeOnNavigation: false,
+        data: {
+          lecturers: this.lecturersList,
+          course: courseData,
+          user: this.user,
+        }
+      });
   }
 
 }

@@ -249,9 +249,22 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .table {
     padding: 10px 20px;
-    margin-right: 20px;
+    // margin-right: 20px;
 }
 
 .add-course {
     margin-bottom: 20px;
+}
+
+.table-button {
+    margin: 0px 5px;
+}
+
+.table-div{
+    margin-right: 20px;
+    display: inline;
+}
+
+tbody th {
+    font-weight: normal;
 }

@@ -7,4 +7,5 @@ export class CourseRO {
     curriculum?: string;
     students?: StudentRO[];
     lecturers?: LecturerRO[];
+    lecturers_id?: any[];
 }

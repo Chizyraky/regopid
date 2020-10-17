@@ -37,9 +37,9 @@ export class LecturerController {
         return res;
     }
 
-    @Get()
-    @UseGuards()
-    async getAllLecturers() {
+    @Get('lecturer')
+    @UseGuards(AuthGuard())
+    async getAllLecturers(): Promise<LecturerRO[]> {
         return await this.lecturerService.showAll();
     }
 

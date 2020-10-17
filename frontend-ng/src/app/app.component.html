@@ -17,11 +17,14 @@
                  [fixedInViewport]="true" >
 
                   <ul>
-                    <li [ngClass]="{'active': currentUrl === '/'}" *ngIf="!loggedIn">
+                    <li [ngClass]="{'active': currentUrl === '/' || ''}" *ngIf="!loggedIn">
                       <a routerLink="/" (click)="changeUrl('/')">Login</a>
                     </li>
                     <li [ngClass]="{'active': currentUrl === '/student'}" *ngIf="loggedIn">
                       <a routerLink="/student" (click)="changeUrl('/student')">Register Student</a>
+                    </li>
+                    <li [ngClass]="{'active': currentUrl === '/lecturer'}" *ngIf="loggedIn">
+                      <a routerLink="/lecturer" (click)="changeUrl('/lecturer')">Register Lecturer</a>
                     </li>
                     <li [ngClass]="{'active': currentUrl === '/lecturer/attendance'}" *ngIf="loggedIn">
                       <a routerLink="/lecturer/attendance">Check Attendance</a>

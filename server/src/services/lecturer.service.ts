@@ -30,7 +30,7 @@ export class LecturerService {
         this.simpleCrypto = new SimpleCrypto('secretKey');
     }
 
-    async showAll() {
+    async showAll(): Promise<LecturerRO[]> {
         const lecturers = await this.lecturerModel.find();
         return lecturers.map(lect => this.toResponseObject(lect));
     }
@@ -41,12 +41,12 @@ export class LecturerService {
                 {
                     path: 'courses',
                     model: 'Course',
-                    select: 'course_name curriculum',
+                    select: 'course_name curriculum lecturers',
                     populate: {
                         path: 'students',
                         model: 'Student',
                         select: 'names studentId email'
-                    }
+                    },
                 },
             ])
             .exec();
@@ -182,18 +182,19 @@ export class LecturerService {
         if (typeof lecturer.courses !== 'undefined') {
             const checkForCourse = lecturer.courses.toString().split(':');
             if (checkForCourse.length > 2) {
+                Logger.log(lecturer.courses)
                 courses = lecturer.courses.map((course): CourseRO =>
                     ({
                         id: course.id,
                         course_name: course.course_name,
                         curriculum: course.curriculum,
                         students: course.students,
+                        lecturers_id: course.lecturers,
                     })
                 );
                 lecturerRO.courses = courses;
             }
         }
-        console.log(lecturerRO);
 
         return lecturerRO;
     }

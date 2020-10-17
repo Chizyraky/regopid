@@ -87,9 +87,28 @@
                                         <th>{{student.studentId}}</th>
                                     </tr>
                                 </tbody>
+                                <p class="pb-4" style="width: 100%;"></p>
+                                <p class="pb-4" style="width: 100%;"></p>
+                                <thead>
+                                    <tr>
+                                        <th>Lecturer Names</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let student of element.students">
+                                        <th>{{student.names}}</th>
+                                        <th>{{student.email}}</th>
+                                    </tr>
+                                </tbody>
+                                
                             </table>
+                            
                             <div>
-                                <button (click)="showPopup(element.id)">Add Student</button>
+                                <button class="table-button" (click)="showPopup(element.id)">Add Student</button>
+                            </div>
+                            <div>
+                                <button class="table-button" (click)="showAddLecturerDialog(element)">Add Lecturer</button>
                             </div>
 
                         </div>

@@ -19,6 +19,7 @@ import { AddCourseDialogComponent } from './dialogs/add-course-dialog/add-course
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { QrDialogComponent } from './dialogs/qr-dialog/qr-dialog.component';
 import { AttendanceComponent } from './lecturer/attendance/attendance.component';
+import { AddLecturerDialogComponent } from './dialogs/add-lecturer-dialog/add-lecturer-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AttendanceComponent } from './lecturer/attendance/attendance.component'
     LecturerProfileComponent,
     AddCourseDialogComponent,
     QrDialogComponent,
-    AttendanceComponent
+    AttendanceComponent,
+    AddLecturerDialogComponent
   ],
   imports: [
     BrowserModule,

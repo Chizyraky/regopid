@@ -5,6 +5,7 @@ import SimpleCrypto from 'simple-crypto-js';
 import { CourseDTO } from 'src/dto/course.dto';
 import { CourseRO } from 'src/dto/course.response.dto';
 import { AttendanceDTO } from 'src/dto/lecturer.dto';
+import { LecturerRO } from 'src/dto/lecturer.response.dto';
 import { AttendanceRecord } from 'src/models/attendance.model';
 import { Course } from 'src/models/course.model';
 import { Lecturer } from 'src/models/lecturer.model';
@@ -45,12 +46,23 @@ export class CourseService {
     }
 
     async addLecturer(data: CourseDTO) {
+        const course = await this.courseModel.findOne({ course_name: data.course_name }).populate('lecturers').exec();
 
-        // if (!user) {
-        //     throw new HttpException('Lecturer doesn"t exists.', HttpStatus.BAD_REQUEST);
-        // }
+        const lecturers = course.lecturers.map(lect => lect.id);
+        let newLecturerId = data.lecturers_id.filter(id => !lecturers.includes(id))[0];
+        Logger.log(newLecturerId, 'New LEcturer ID');
+        const newLecturer = await this.lecturerModel.findOne({ _id: newLecturerId }).exec();
 
+        if (!newLecturer) {
+            throw new HttpException('Lecturer doesn"t exist.', HttpStatus.BAD_REQUEST);
+        }
 
+        newLecturer.courses.push(course);
+        course.lecturers.push(newLecturer);
+        await newLecturer.save();
+        await course.save();
+
+        return course as CourseRO;
     }
 
     async registerStudent(data: AttendanceDTO) {
@@ -74,7 +86,7 @@ export class CourseService {
         course.students.push(studentEntity);
         const result = await course.save();
 
-        return result;
+        return this.toResponseObject(result);
     }
 
     async setAttendance(data: AttendanceDTO) {
@@ -99,4 +111,34 @@ export class CourseService {
 
 
     // }
+
+    private toResponseObject(course: Course): CourseRO {
+        let lecturers;
+
+        const courseRO: CourseRO = {
+            id: course.id,
+            course_name: course.course_name,
+            curriculum: course.curriculum,
+        };
+
+        if (typeof course.lecturers !== 'undefined') {
+            const checkForCourse = course.lecturers.toString().split(':');
+            if (checkForCourse.length > 2) {
+                lecturers = course.lecturers.map((lecturer): LecturerRO =>
+                    ({
+                        id: lecturer.id,
+                        names: lecturer.names,
+                        email: lecturer.email,
+                        curriculum: lecturer.curriculum,
+                    })
+                );
+                courseRO.lecturers = lecturers;
+            } else {
+                courseRO.lecturers_id = course.lecturers;
+            }
+        }
+        console.log(courseRO);
+
+        return courseRO;
+    }
 }
