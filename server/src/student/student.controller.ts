@@ -11,9 +11,9 @@ export class StudentController {
     }
 
     @Get()
-    getAllStudents(): string {
-        // return await this.studentService.showAll();
-        return 'Oranges';
+    async getAllStudents(): Promise<StudentRO[]> {
+        return await this.studentService.showAll();
+        // return 'Oranges';
     }
 
     @Post()
@@ -21,12 +21,6 @@ export class StudentController {
         console.log('Ok')
         return await this.studentService.register(data);
     }
-
-    @Delete()
-    delete() {
-
-    }
-
 
 
 }

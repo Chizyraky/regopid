@@ -1,18 +1,18 @@
 <h1 mat-dialog-title>Add Lecturer to {{data.course.course_name}}</h1>
 
 <div mat-dialog-content>
-    <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Select Lecturer</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let food of data.lecturers" [value]="food" [disabled]="food.names === data.user.names">
-            {{food.names}}
-          </mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Select Lecturer</mat-label>
+    <mat-select [formControl]="lecturer">
+      <mat-option *ngFor="let food of data.lecturers" [value]="food" [disabled]="food.names === data.user.names">
+        {{food.names}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <mat-dialog-actions align="end" class="dialog-actions">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button type="submit" class="button is-primary" cdkFocusInitial (click)="onSubmit()" [disabled]="!lecturer.valid">Submit</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button type="submit" class="button is-primary" cdkFocusInitial (click)="onSubmit()"
+    [disabled]="!lecturer.valid">Submit</button>
 </mat-dialog-actions>
-

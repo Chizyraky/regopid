@@ -1,0 +1,5 @@
+<div class="container">
+    <ngx-qrcode *ngFor="let student of students" [elementType]="elementType" [errorCorrectionLevel]="correctionLevel"
+        [value]="student.encryptedKey" cssClass="bshadow" class="item">
+    </ngx-qrcode>
+</div>

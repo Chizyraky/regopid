@@ -24,10 +24,9 @@ export class StudentService {
         this.simpleCrypto = new SimpleCrypto('secretKey');
     }
 
-    async showAll() {
-        // const student = await this.studentModel.find();
-        // return this.toResponseObject(student);
-        return 'oranges';
+    async showAll(): Promise<StudentRO[]> {
+        const students = await this.studentModel.find();
+        return students.map(student => this.toResponseObject(student));
     }
 
     async register(data: StudentDTO): Promise<StudentRO> {
