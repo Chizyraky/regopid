@@ -14,6 +14,7 @@ import { AttendanceRecord } from 'src/models/attendance.model';
 import { Student } from 'src/student/student.model';
 import * as bcrypt from 'bcryptjs';
 import { StudentController } from 'src/student/student.controller';
+import { StudentRO } from 'src/student/student.response.dto';
 
 @Injectable()
 export class LecturerService {
@@ -41,12 +42,19 @@ export class LecturerService {
                 {
                     path: 'courses',
                     model: 'Course',
-                    select: 'course_name curriculum lecturers',
-                    populate: {
-                        path: 'students',
-                        model: 'Student',
-                        select: 'names studentId email'
-                    },
+                    select: 'course_name curriculum',
+                    populate: [
+                        {
+                            path: 'students',
+                            model: 'Student',
+                            select: 'names studentId email'
+                        },
+                        {
+                            path: 'lecturers',
+                            model: 'Lecturer',
+                            select: 'names email'
+                        }
+                    ],
                 },
             ])
             .exec();
@@ -188,8 +196,8 @@ export class LecturerService {
                         id: course.id,
                         course_name: course.course_name,
                         curriculum: course.curriculum,
-                        students: course.students,
-                        lecturers_id: course.lecturers,
+                        students: course.students.map(res => res as StudentRO),
+                        lecturers: course.lecturers.map(res => res as LecturerRO),
                     })
                 );
                 lecturerRO.courses = courses;

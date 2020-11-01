@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Course } from '@app/models/course';
+import { Lecturer } from '@app/models/lecturer';
 import { ApiService } from '@app/services/api.service';
 
 @Component({
@@ -26,12 +27,17 @@ export class AddLecturerDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    this.newCourse.lecturers_id.push(this.lecturer.value);
+    const lect = this.lecturer.value as Lecturer;
+    this.newCourse.lecturers.push(lect);
     this.apiService.addLecturerToCourse(this.newCourse).subscribe(
       res => {
         this.dialogRef.close();
       }
     );
+  }
+
+  optionDisabled(food: any) {
+    return this.newCourse.lecturers.some(x => x.names === food.names);
   }
 
 }

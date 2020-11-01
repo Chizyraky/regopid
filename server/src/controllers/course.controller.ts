@@ -26,10 +26,10 @@ export class CourseController {
         return await this.courseService.registerStudent(data);
     }
 
-    @Post()
+    @Post('addLecturer')
     @UseGuards(AuthGuard())
     async addLecturer(@Body() data: CourseDTO) {
-
+        return await this.courseService.addLecturer(data);
     }
 
 

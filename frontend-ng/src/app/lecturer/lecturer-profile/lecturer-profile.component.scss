@@ -184,6 +184,7 @@ tr.example-detail-row {
 
 tr.example-element-row:not(.example-expanded-row):hover {
   background: whitesmoke;
+  cursor: pointer;
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
@@ -197,6 +198,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-detail {
   overflow: hidden;
   display: flex;
+  background-color: rgb(232, 240, 243);
 }
 
 .example-element-diagram {
@@ -249,6 +251,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .table {
     padding: 10px 20px;
+    background-color: rgb(232, 240, 243);
     // margin-right: 20px;
 }
 

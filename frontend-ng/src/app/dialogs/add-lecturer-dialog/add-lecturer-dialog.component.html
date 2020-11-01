@@ -4,7 +4,7 @@
   <mat-form-field appearance="fill" style="width: 100%;">
     <mat-label>Select Lecturer</mat-label>
     <mat-select [formControl]="lecturer">
-      <mat-option *ngFor="let food of data.lecturers" [value]="food" [disabled]="food.names === data.user.names">
+      <mat-option *ngFor="let food of data.lecturers" [value]="food" [disabled]="optionDisabled(food)">
         {{food.names}}
       </mat-option>
     </mat-select>

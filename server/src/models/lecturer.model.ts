@@ -34,8 +34,8 @@ LecturerSchema.method('comparePassword', function (password: string): boolean {
 export interface Lecturer extends mongoose.Document {
     id: string;
     email: string;
-    password: string;
     names: string;
+    password: string;
     curriculum: string;
     courses: Course[];
 

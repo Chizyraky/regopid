@@ -49,7 +49,7 @@ export class CourseService {
         const course = await this.courseModel.findOne({ course_name: data.course_name }).populate('lecturers').exec();
 
         const lecturers = course.lecturers.map(lect => lect.id);
-        let newLecturerId = data.lecturers_id.filter(id => !lecturers.includes(id))[0];
+        let newLecturerId = data.lecturers.filter(lect => !lecturers.includes(lect.id))[0];
         Logger.log(newLecturerId, 'New LEcturer ID');
         const newLecturer = await this.lecturerModel.findOne({ _id: newLecturerId }).exec();
 
