@@ -12,6 +12,7 @@ import { LocalStrategy } from 'src/auth/local.strategy';
 import { AttendanceRecordSchema } from 'src/models/attendance.model';
 import { StudentSchema } from 'src/student/student.model';
 import { CourseSchema } from 'src/models/course.model';
+import { CourseModule } from './course.module';
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import { CourseSchema } from 'src/models/course.model';
             secretOrPrivateKey: 'secret',
             signOptions: { expiresIn: '7d' },
         }),
+        forwardRef(() => CourseModule),
     ],
     controllers: [LecturerController],
     providers: [

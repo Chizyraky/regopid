@@ -15,6 +15,7 @@ import { Student } from 'src/student/student.model';
 import * as bcrypt from 'bcryptjs';
 import { StudentController } from 'src/student/student.controller';
 import { StudentRO } from 'src/student/student.response.dto';
+import { CourseService } from './course.service';
 
 @Injectable()
 export class LecturerService {
@@ -27,6 +28,8 @@ export class LecturerService {
         @InjectModel('Course') private readonly courseModel: Model<Course>,
         @InjectModel('AttendanceRecord') private readonly attendanceRecord: Model<AttendanceRecord>,
         private readonly jwtService: JwtService,
+        @Inject(forwardRef(() => CourseService))
+        private courseService: CourseService,
     ) {
         this.simpleCrypto = new SimpleCrypto('secretKey');
     }
@@ -36,29 +39,15 @@ export class LecturerService {
         return lecturers.map(lect => this.toResponseObject(lect));
     }
 
+    async minorRead(email: string) {
+        const user = await this.lecturerModel.findOne({ email }, { password: 0 });
+        return this.toResponseObject(user);
+    };
+
     async read(email: string) {
         const user = await this.lecturerModel.findOne({ email }, { password: 0 })
-            .populate([
-                {
-                    path: 'courses',
-                    model: 'Course',
-                    select: 'course_name curriculum',
-                    populate: [
-                        {
-                            path: 'students',
-                            model: 'Student',
-                            select: 'names studentId email'
-                        },
-                        {
-                            path: 'lecturers',
-                            model: 'Lecturer',
-                            select: 'names email'
-                        }
-                    ],
-                },
-            ])
             .exec();
-        Logger.log(user, 'USER');
+        // Logger.log(user, 'USER');
 
         return this.toResponseObject(user);
     }
@@ -188,22 +177,30 @@ export class LecturerService {
         };
 
         if (typeof lecturer.courses !== 'undefined') {
+            // Logger.log(lecturer.courses.toString(), 'to string')
             const checkForCourse = lecturer.courses.toString().split(':');
             if (checkForCourse.length > 2) {
-                Logger.log(lecturer.courses)
+                // Logger.log(lecturer.courses)
                 courses = lecturer.courses.map((course): CourseRO =>
-                    ({
-                        id: course.id,
-                        course_name: course.course_name,
-                        curriculum: course.curriculum,
-                        students: course.students.map(res => res as StudentRO),
-                        lecturers: course.lecturers.map(res => res as LecturerRO),
-                    })
+                ({
+                    id: course.id,
+                    course_name: course.course_name,
+                    curriculum: course.curriculum,
+                    students: course.students.map(res => res as StudentRO),
+                    lecturers: course.lecturers.map(res => {
+                        return { 
+                            id: res._id,
+                            names: res.names,
+                            email: res.email,
+                        } as LecturerRO;
+                    }),
+                })
+                // this.courseService.toResponseObject(course)
                 );
                 lecturerRO.courses = courses;
             }
         }
-
+        // Logger.log(lecturerRO, 'USER RO');
         return lecturerRO;
     }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { passportJwtSecret } from 'jwks-rsa';
@@ -21,7 +21,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: any) {
-        // const user = await this.lecturerService.read(payload);
-        return payload;
+        const user = await this.lecturerService.minorRead(payload.email);
+        return user;
     }
 }

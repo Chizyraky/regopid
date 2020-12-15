@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Logger, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { identity } from 'rxjs';
 import { CourseDTO } from 'src/dto/course.dto';
 import { AttendanceDTO } from 'src/dto/lecturer.dto';
 import { CourseService } from 'src/services/course.service';
@@ -13,6 +14,12 @@ export class CourseController {
         // @Inject(forwardRef(() => AuthService))
         // private readonly authService: AuthService,
     ) { }
+
+    @Get()
+    @UseGuards(AuthGuard())
+    async getById(@Lecturer('id') id) {
+        return this.courseService.getAllCourseById(id);
+    }
 
     @Post()
     @UseGuards(AuthGuard())
@@ -29,6 +36,7 @@ export class CourseController {
     @Post('addLecturer')
     @UseGuards(AuthGuard())
     async addLecturer(@Body() data: CourseDTO) {
+        Logger.log(data, 'CourseDTO Object: ');
         return await this.courseService.addLecturer(data);
     }
 

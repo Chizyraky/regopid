@@ -19,19 +19,6 @@
         </div>
         <div class="col-1-of-2">
             <div class="details">
-                <h2 class="details__topic">Course Information</h2>
-                <div>
-                    <div class="details__label">Names</div>
-                    <div class="details__value">Curricullum</div>
-                </div>
-                <div>
-                    <div class="details__label">Email</div>
-                    <div class="details__value">Curricullum</div>
-                </div>
-                <div>
-                    <div class="details__label">Curricullum</div>
-                    <div class="details__value">Curricullum</div>
-                </div>
             </div>
         </div>
     </div>
@@ -42,7 +29,7 @@
         <div class="add-course">
             <button class="button primary" (click)="showCoursesDialog()">Add Course</button>
         </div>
-        <div *ngIf="user?.courses" id="couses">
+        <div *ngIf="dataSource && dataSource.length > 0" id="couses">
 
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
@@ -124,7 +111,7 @@
             </table>
 
         </div>
-        <div *ngIf="!user?.courses">
+        <div *ngIf="!dataSource || dataSource.length < 1">
             No Courses
         </div>
     </div>

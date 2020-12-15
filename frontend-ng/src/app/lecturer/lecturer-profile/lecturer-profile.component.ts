@@ -50,20 +50,29 @@ export class LecturerProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.getAllLecturers();
+    this.studentEncryption = this.fb.control('', [Validators.required]);
   }
 
   getUser() {
+    this.apiService.getCoursesByLecturer().subscribe(
+      (res: Course[]) => {
+        this.dataSource = res;
+        console.log(this.dataSource);
+      },
+      (err) => console.log(err)
+    );
+
     this.authService.whoami().subscribe(
       res => {
         this.user = res;
         console.log(this.user);
-        this.dataSource = res.courses;
-        console.log(this.dataSource);
+        // this.dataSource = res.courses;
+        // console.log(this.dataSource);
         // this.expandedElement = res.courses.
       }
     );
 
-    this.studentEncryption = this.fb.control('', [Validators.required]);
+    
   }
 
   showCoursesDialog() {

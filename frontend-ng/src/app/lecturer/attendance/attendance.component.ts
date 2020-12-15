@@ -28,7 +28,7 @@ export class AttendanceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.apiService.getLecturerCouses().subscribe(res => {
+    this.apiService.getCoursesByLecturer().subscribe(res => {
       this.courses = res;
     });
 
@@ -59,14 +59,15 @@ export class AttendanceComponent implements OnInit {
 
   onCourseChange() {
     console.log(this.courseIdControl.value);
-    this.apiService.getAttendance(this.courseIdControl.value).subscribe(
-      res => {
-        this.attendanceList = res;
-        this.dataSource = new MatTableDataSource(this.attendanceList);
-        console.log(res.map(x => new Date(x.date).toISOString()));
-      },
-    );
-    // console.log(this.attendanceList[0].date.getTime);
+    if (this.courseIdControl.value !== '') {
+      this.apiService.getAttendance(this.courseIdControl.value).subscribe(
+        res => {
+          this.attendanceList = res;
+          this.dataSource = new MatTableDataSource(this.attendanceList);
+          console.log(res.map(x => new Date(x.date).toISOString()));
+        },
+      );
+    }
   }
 
   getDate(data: Date) {

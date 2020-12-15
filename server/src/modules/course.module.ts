@@ -20,5 +20,6 @@ import { AttendanceRecordSchema } from 'src/models/attendance.model';
     ],
     controllers: [CourseController],
     providers: [CourseService],
+    exports: [CourseService]
 })
 export class CourseModule { }

@@ -10,6 +10,7 @@ import { AttendanceRecord } from 'src/models/attendance.model';
 import { Course } from 'src/models/course.model';
 import { Lecturer } from 'src/models/lecturer.model';
 import { Student } from 'src/student/student.model';
+import { StudentRO } from 'src/student/student.response.dto';
 
 @Injectable()
 export class CourseService {
@@ -22,6 +23,26 @@ export class CourseService {
         @InjectModel('AttendanceRecord') private readonly attendanceRecordModel: Model<AttendanceRecord>,
     ) {
         this.simpleCrypto = new SimpleCrypto('secretKey');
+    }
+
+    async getAllCourseById(id: any) {
+        const courses = await this.courseModel.find({ lecturers: { $in : [id]}})
+        .populate([
+            {
+                path: 'students',
+                model: 'Student',
+                select: 'studentId email names',
+            },
+            {
+                path: 'lecturers',
+                model: 'Lecturer',
+                select: 'id email names',
+            }
+        ]
+        );
+
+        Logger.log(courses.map( course => this.toResponseObject(course)), 'courses related to this Id');
+        return courses.map( course => this.toResponseObject(course));
     }
 
     async create(email: string, data: CourseDTO): Promise<CourseRO> {
@@ -39,28 +60,39 @@ export class CourseService {
         newCourse.lecturers.push(user);
 
         const result = await newCourse.save();
+        Logger.log(result, 'Saved new course');
         user.courses.push(result);
-        await user.save();
+        Logger.log( await user.save(), 'Saved Lecturer');
+        // await user.save();
 
         return result as CourseRO;
     }
 
     async addLecturer(data: CourseDTO) {
-        const course = await this.courseModel.findOne({ course_name: data.course_name }).populate('lecturers').exec();
+        const course = await this.courseModel.findOne({ course_name: data.course_name })
+        .populate('lecturers')
+        .exec();
+        Logger.log(course, 'course');
 
-        const lecturers = course.lecturers.map(lect => lect.id);
-        let newLecturerId = data.lecturers.filter(lect => !lecturers.includes(lect.id))[0];
-        Logger.log(newLecturerId, 'New LEcturer ID');
+        const courseLecturers = course.lecturers
+        .map(lect => lect.id);
+
+        // Logger.log(courseLecturers, 'lecturers id');
+        let newLecturerId = data.lecturers.map(lect => lect.id).filter(lect => courseLecturers.indexOf(lect))[0];
+        // Logger.log(newLecturerId, 'New LEcturer ID');
         const newLecturer = await this.lecturerModel.findOne({ _id: newLecturerId }).exec();
-
+        Logger.log(newLecturer, 'New Lecturer');
         if (!newLecturer) {
             throw new HttpException('Lecturer doesn"t exist.', HttpStatus.BAD_REQUEST);
         }
 
         newLecturer.courses.push(course);
+        Logger.log(newLecturer, 'Edited New Lecturer');
         course.lecturers.push(newLecturer);
-        await newLecturer.save();
-        await course.save();
+        Logger.log(course, 'Edited course');
+        Logger.log(await newLecturer.save(), 'Saved lecturer' );
+        Logger.log(await course.save(), 'Saved course' );
+        // await course.save();
 
         return course as CourseRO;
     }
@@ -112,8 +144,9 @@ export class CourseService {
 
     // }
 
-    private toResponseObject(course: Course): CourseRO {
+    public toResponseObject(course: Course): CourseRO {
         let lecturers;
+        let students;
 
         const courseRO: CourseRO = {
             id: course.id,
@@ -125,16 +158,31 @@ export class CourseService {
             const checkForCourse = course.lecturers.toString().split(':');
             if (checkForCourse.length > 2) {
                 lecturers = course.lecturers.map((lecturer): LecturerRO =>
-                    ({
-                        id: lecturer.id,
-                        names: lecturer.names,
-                        email: lecturer.email,
-                        curriculum: lecturer.curriculum,
-                    })
+                ({
+                    id: lecturer.id,
+                    names: lecturer.names,
+                    email: lecturer.email,
+                    curriculum: lecturer.curriculum,
+                })
                 );
                 courseRO.lecturers = lecturers;
             } else {
                 courseRO.lecturers_id = course.lecturers;
+            }
+        }
+        if (typeof course.students !== 'undefined') {
+            const checkForCourse = course.students.toString().split(':');
+            if (checkForCourse.length > 2) {
+                students = course.students.map((student): StudentRO =>
+                ({
+                    names: student.names,
+                    email: student.email,
+                    studentId: student.studentId,
+                })
+                );
+                courseRO.students = students;
+            } else {
+                courseRO.students = course.students;
             }
         }
         console.log(courseRO);

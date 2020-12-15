@@ -54,4 +54,8 @@ export class ApiService {
   addLecturerToCourse(data: Course) {
     return this.http.post(this.api + '/course/addLecturer', data);
   }
+
+  getCoursesByLecturer() {
+    return this.http.get<Course[]>(this.api + '/course');
+  }
 }
