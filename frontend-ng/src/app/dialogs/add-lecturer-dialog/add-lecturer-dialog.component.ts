@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Course } from '@app/models/course';
 import { Lecturer } from '@app/models/lecturer';
 import { ApiService } from '@app/services/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-lecturer-dialog',
@@ -19,6 +20,7 @@ export class AddLecturerDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService,
     private dialogRef: MatDialogRef<AddLecturerDialogComponent>,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +33,7 @@ export class AddLecturerDialogComponent implements OnInit {
     this.newCourse.lecturers.push(lect);
     this.apiService.addLecturerToCourse(this.newCourse).subscribe(
       res => {
+        this.toastr.success(`${lect.names} has been added as a lecturer to ${this.newCourse.course_name}.`, 'Success!');
         this.dialogRef.close();
       }
     );

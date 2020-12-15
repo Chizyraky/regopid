@@ -8,6 +8,7 @@ import { Lecturer } from '@app/models/lecturer';
 import { ApiService } from '@app/services/api.service';
 import { ValidateWhitespace } from '@app/shared/utilities/validators';
 import { Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-course-dialog',
@@ -25,7 +26,7 @@ export class AddCourseDialogComponent implements OnInit {
     private apiService: ApiService,
     private authService: AuthService,
     private dialogRef: MatDialogRef<AddCourseDialogComponent>,
-    private router: Router,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -59,10 +60,14 @@ export class AddCourseDialogComponent implements OnInit {
     this.apiService.createCourse(course).subscribe(
       (res) => {
         console.log(res);
+        this.toastr.success('Course was successfuly created!', 'Success');
         this.dialogRef.close();
       },
       (err) => {
         console.log(err);
+        this.toastr.error(err.error.message || 'Internal server error', 'Error Message', {
+          closeButton: true
+        });
       }
     );
   }

@@ -11,11 +11,15 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from '@app/auth/auth.service';
 import { environment } from '@env/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private auth: AuthService) { }
+  constructor(
+    private auth: AuthService,
+    private toastr: ToastrService,
+    ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log(request.url);
@@ -30,7 +34,9 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError(err => {
-        console.log(err);
+        this.toastr.error(err.error.message || 'Internal server error', 'Error Message', {
+          closeButton: true
+        });
         if (err instanceof HttpErrorResponse) {
           if (err.status === 400) {
             // Handle unauthorized error

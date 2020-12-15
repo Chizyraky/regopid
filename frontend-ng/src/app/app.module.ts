@@ -5,6 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 import { StudentComponent } from './student/student.component';
 import { MaterialModule } from './material/material.module';
 import { ApiService } from './services/api.service';
@@ -57,7 +59,12 @@ import { AllStudentsComponent } from './student/all-students/all-students.compon
     MatNativeDateModule,
     MaterialModule,
     NwbAllModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+  }),
   ],
   providers: [
     ApiService,

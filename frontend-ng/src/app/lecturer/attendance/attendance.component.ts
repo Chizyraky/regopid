@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Attendance, AttendanceDTO, Course } from '@app/models/course';
 import { ApiService } from '@app/services/api.service';
 import { delay, tap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-attendance',
@@ -25,6 +26,7 @@ export class AttendanceComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -101,7 +103,8 @@ export class AttendanceComponent implements OnInit {
     this.apiService.setAttendance(reg).subscribe(
       res => {
         this.attendanceList = res;
-        console.log(res);
+        this.dataSource = new MatTableDataSource(this.attendanceList);
+        this.toastr.success(`The attendance has been registered`, 'Success');
         this.studentEncryption = this.fb.control('', [Validators.required]);
         $event.target.value = '';
       }

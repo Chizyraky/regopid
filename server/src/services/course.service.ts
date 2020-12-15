@@ -77,9 +77,9 @@ export class CourseService {
         const courseLecturers = course.lecturers
         .map(lect => lect.id);
 
-        // Logger.log(courseLecturers, 'lecturers id');
-        let newLecturerId = data.lecturers.map(lect => lect.id).filter(lect => courseLecturers.indexOf(lect))[0];
-        // Logger.log(newLecturerId, 'New LEcturer ID');
+        Logger.log(courseLecturers, 'lecturers id');
+        let newLecturerId = data.lecturers.map(lect => lect.id).filter(lect => courseLecturers.indexOf(lect) < 0)[0];
+        Logger.log(newLecturerId, 'New LEcturer ID');
         const newLecturer = await this.lecturerModel.findOne({ _id: newLecturerId }).exec();
         Logger.log(newLecturer, 'New Lecturer');
         if (!newLecturer) {
@@ -92,7 +92,6 @@ export class CourseService {
         Logger.log(course, 'Edited course');
         Logger.log(await newLecturer.save(), 'Saved lecturer' );
         Logger.log(await course.save(), 'Saved course' );
-        // await course.save();
 
         return course as CourseRO;
     }
@@ -117,6 +116,8 @@ export class CourseService {
 
         course.students.push(studentEntity);
         const result = await course.save();
+        studentEntity.courses.push(course);
+        await studentEntity.save();
 
         return this.toResponseObject(result);
     }

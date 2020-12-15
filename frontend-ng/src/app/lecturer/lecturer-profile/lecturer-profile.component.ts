@@ -9,6 +9,7 @@ import { Lecturer } from '@app/models/lecturer';
 import { Student } from '@app/models/student';
 import { ApiService } from '@app/services/api.service';
 import { AddLecturerDialogComponent } from '@app/dialogs/add-lecturer-dialog/add-lecturer-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-lecturer-profile',
@@ -44,7 +45,7 @@ export class LecturerProfileComponent implements OnInit {
     private apiService: ApiService,
     private readonly dialog: MatDialog,
     private fb: FormBuilder,
-    private renderer: Renderer2,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -59,7 +60,11 @@ export class LecturerProfileComponent implements OnInit {
         this.dataSource = res;
         console.log(this.dataSource);
       },
-      (err) => console.log(err)
+      (err) => {
+        this.toastr.error(err.error.message || 'Internal server error', 'Error Message', {
+        closeButton: true
+      });
+    }
     );
 
     this.authService.whoami().subscribe(
@@ -113,8 +118,8 @@ export class LecturerProfileComponent implements OnInit {
     };
     console.log(reg);
     this.apiService.registerStudent(reg).subscribe(
-      res => {
-        console.log(res);
+      res => {;
+        this.toastr.success('Student successfuly registered!', 'Success');
         this.studentEncryption = this.fb.control('', [Validators.required]);
       }
     );
@@ -128,7 +133,9 @@ export class LecturerProfileComponent implements OnInit {
         console.log(res);
       },
       err => {
-        console.log(err);
+        this.toastr.error(err.error.message || 'Internal server error', 'Error Message', {
+          closeButton: true
+        });
       }
     )
   }
